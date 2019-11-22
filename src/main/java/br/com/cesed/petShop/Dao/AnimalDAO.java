@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,157 +15,323 @@ public class AnimalDAO implements GenericDAO<Animal> {
 
 	private Connection con;
 
-	public void inserir(Animal animal) throws Exception {
-		con = ConexaoUtil.getInstance().getConnection();
-		String sql = "INSERT INTO ANIMAL(registro_id, tipo, peso, altura, data_ultima_medicao, raca, preco_compra, preco_venda, data_nascimento) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	public void inserir(Animal animal) {
+		try {
+			con = ConexaoUtil.getInstance().getConnection();
+			String sql = "INSERT INTO ANIMAL(registro_id, tipo, peso, altura, data_ultima_medicao, raca, preco_compra, preco_venda, data_nascimento) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-		PreparedStatement statement = con.prepareStatement(sql);
-		statement.setString(1, animal.getRaca());
-		statement.setString(2, animal.getTipo());
-		statement.setDouble(3, animal.getPeso());
-		statement.setDouble(4, animal.getAltura());
-		statement.setDate(5, (Date) animal.getDataUltimaMedicacao());
-		statement.setString(6, animal.getRaca());
-		statement.setDouble(7, animal.getPrecoCompra());
-		statement.setDouble(8, animal.getPrecoVenda());
-		statement.setDate(9, (Date) animal.getDataNascimento());
+			PreparedStatement statement = con.prepareStatement(sql);
+			statement.setString(1, animal.getRaca());
+			statement.setString(2, animal.getTipo());
+			statement.setDouble(3, animal.getPeso());
+			statement.setDouble(4, animal.getAltura());
+			statement.setDate(5, (Date) animal.getDataUltimaMedicacao());
+			statement.setString(6, animal.getRaca());
+			statement.setDouble(7, animal.getPrecoCompra());
+			statement.setDouble(8, animal.getPrecoVenda());
+			statement.setDate(9, (Date) animal.getDataNascimento());
 
-		statement.execute();
+			statement.execute();
 
-		con.close();
-
-	}
-
-	public void inserirSemPesoAlturaEMedicacao(Animal animal) throws Exception {
-		con = ConexaoUtil.getInstance().getConnection();
-		String sql = "INSERT INTO ANIMAL(registro_id, tipo, raca, preco_compra, preco_venda, data_nascimento) VALUES(?, ?, ?, ?, ?, ?)";
-
-		PreparedStatement statement = con.prepareStatement(sql);
-		statement.setString(1, animal.getRaca());
-		statement.setString(2, animal.getTipo());
-		statement.setString(3, animal.getRaca());
-		statement.setDouble(4, animal.getPrecoCompra());
-		statement.setDouble(5, animal.getPrecoVenda());
-		statement.setDate(6, (Date) animal.getDataNascimento());
-
-		statement.execute();
-
-		con.close();
-
-	}
-
-	public void inserirSemPrecoVenda(Animal animal) throws Exception {
-		con = ConexaoUtil.getInstance().getConnection();
-		String sql = "INSERT INTO ANIMAL(registro_id, tipo, peso, altura, data_ultima_medicao, raca, preco_compra, data_nascimento) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
-
-		PreparedStatement statement = con.prepareStatement(sql);
-		statement.setString(1, animal.getRaca());
-		statement.setString(2, animal.getTipo());
-		statement.setString(3, animal.getRaca());
-		statement.setDouble(4, animal.getPrecoCompra());
-		statement.setDate(5, (Date) animal.getDataNascimento());
-
-		statement.execute();
-
-		con.close();
-
-	}
-
-	public void inserirSemPrecoCompra(Animal animal) throws Exception {
-		con = ConexaoUtil.getInstance().getConnection();
-		String sql = "INSERT INTO ANIMAL(registro_id, tipo, peso, altura, data_ultima_medicao, raca, preco_venda, data_nascimento) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
-
-		PreparedStatement statement = con.prepareStatement(sql);
-		statement.setString(1, animal.getRaca());
-		statement.setString(2, animal.getTipo());
-		statement.setDouble(3, animal.getPeso());
-		statement.setDouble(4, animal.getAltura());
-		statement.setDate(5, (Date) animal.getDataUltimaMedicacao());
-		statement.setString(6, animal.getRaca());
-		statement.setDouble(7, animal.getPrecoVenda());
-		statement.setDate(8, (Date) animal.getDataNascimento());
-
-		statement.execute();
-
-		con.close();
-
-	}
-
-	public void inserirSemPrecoCompraEVenda(Animal animal) throws Exception {
-		con = ConexaoUtil.getInstance().getConnection();
-		String sql = "INSERT INTO ANIMAL(registro_id, tipo, peso, altura, data_ultima_medicao, raca, data_nascimento) VALUES(?, ?, ?, ?, ?, ?, ?)";
-
-		PreparedStatement statement = con.prepareStatement(sql);
-		statement.setString(1, animal.getRaca());
-		statement.setString(2, animal.getTipo());
-		statement.setDouble(3, animal.getPeso());
-		statement.setDouble(4, animal.getAltura());
-		statement.setDate(5, (Date) animal.getDataUltimaMedicacao());
-		statement.setString(6, animal.getRaca());
-		statement.setDate(7, (Date) animal.getDataNascimento());
-
-		statement.execute();
-
-		con.close();
-
-	}
-	
-	public void inserirSemDataNascimento(Animal animal) throws Exception {
-		con = ConexaoUtil.getInstance().getConnection();
-		String sql = "INSERT INTO ANIMAL(registro_id, tipo, peso, altura, data_ultima_medicao, raca, preco_compra, preco_venda) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
-
-		PreparedStatement statement = con.prepareStatement(sql);
-		statement.setString(1, animal.getRaca());
-		statement.setString(2, animal.getTipo());
-		statement.setDouble(3, animal.getPeso());
-		statement.setDouble(4, animal.getAltura());
-		statement.setDate(5, (Date) animal.getDataUltimaMedicacao());
-		statement.setString(6, animal.getRaca());
-		statement.setDouble(7, animal.getPrecoCompra());
-		statement.setDouble(8, animal.getPrecoVenda());
-
-		statement.execute();
-
-		con.close();
-
-	}
-
-	public void atualizar(Animal obj) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void deletar(Integer id) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public List<Animal> listarTodos() throws Exception {
-		con = ConexaoUtil.getInstance().getConnection();
-		List<Animal> lista = new ArrayList<Animal>();
-		String sql = "Select * from animal";
-		PreparedStatement preparador = con.prepareStatement(sql);
-		ResultSet resultados = preparador.executeQuery();
-		while(resultados.next()) {
-			Animal ani = new Animal();
-			ani.setAltura(resultados.getDouble("altura"));
-			ani.setDataNascimento(resultados.getDate("data_nascimento"));
-			ani.setDataUltimaMedicacao(resultados.getDate("data_ultima_medicao"));
-			ani.setPeso(resultados.getDouble("peso"));
-			ani.setPrecoCompra(resultados.getDouble("preco_compra"));
-			ani.setPrecoVenda(resultados.getDouble("preco_venda"));
-			ani.setRaca(resultados.getString("raca"));
-			ani.setRegistro(resultados.getInt("registro_id"));
-			ani.setTipo(resultados.getString("tipo"));
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		
-		return lista;
+
 	}
 
-	public Animal buscarPorId(Integer id) throws Exception {
+	public void inserirSemPesoAlturaEMedicacao(Animal animal) {
+		try {
+			con = ConexaoUtil.getInstance().getConnection();
+			String sql = "INSERT INTO ANIMAL(registro_id, tipo, raca, preco_compra, preco_venda, data_nascimento) VALUES(?, ?, ?, ?, ?, ?)";
+
+			PreparedStatement statement = con.prepareStatement(sql);
+			statement.setString(1, animal.getRaca());
+			statement.setString(2, animal.getTipo());
+			statement.setString(3, animal.getRaca());
+			statement.setDouble(4, animal.getPrecoCompra());
+			statement.setDouble(5, animal.getPrecoVenda());
+			statement.setDate(6, (Date) animal.getDataNascimento());
+
+			statement.execute();
+
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void inserirSemPrecoVenda(Animal animal) {
+		try {
+			con = ConexaoUtil.getInstance().getConnection();
+			String sql = "INSERT INTO ANIMAL(registro_id, tipo, peso, altura, data_ultima_medicao, raca, preco_compra, data_nascimento) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+
+			PreparedStatement statement = con.prepareStatement(sql);
+			statement.setString(1, animal.getRaca());
+			statement.setString(2, animal.getTipo());
+			statement.setString(3, animal.getRaca());
+			statement.setDouble(4, animal.getPrecoCompra());
+			statement.setDate(5, (Date) animal.getDataNascimento());
+
+			statement.execute();
+
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void inserirSemPrecoCompra(Animal animal) {
+		try {
+			con = ConexaoUtil.getInstance().getConnection();
+			String sql = "INSERT INTO ANIMAL(registro_id, tipo, peso, altura, data_ultima_medicao, raca, preco_venda, data_nascimento) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+
+			PreparedStatement statement = con.prepareStatement(sql);
+			statement.setString(1, animal.getRaca());
+			statement.setString(2, animal.getTipo());
+			statement.setDouble(3, animal.getPeso());
+			statement.setDouble(4, animal.getAltura());
+			statement.setDate(5, (Date) animal.getDataUltimaMedicacao());
+			statement.setString(6, animal.getRaca());
+			statement.setDouble(7, animal.getPrecoVenda());
+			statement.setDate(8, (Date) animal.getDataNascimento());
+
+			statement.execute();
+
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void inserirSemPrecoCompraEVenda(Animal animal) {
+		try {
+			con = ConexaoUtil.getInstance().getConnection();
+			String sql = "INSERT INTO ANIMAL(registro_id, tipo, peso, altura, data_ultima_medicao, raca, data_nascimento) VALUES(?, ?, ?, ?, ?, ?, ?)";
+
+			PreparedStatement statement = con.prepareStatement(sql);
+			statement.setString(1, animal.getRaca());
+			statement.setString(2, animal.getTipo());
+			statement.setDouble(3, animal.getPeso());
+			statement.setDouble(4, animal.getAltura());
+			statement.setDate(5, (Date) animal.getDataUltimaMedicacao());
+			statement.setString(6, animal.getRaca());
+			statement.setDate(7, (Date) animal.getDataNascimento());
+
+			statement.execute();
+
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void inserirSemDataNascimento(Animal animal) {
+		try {
+			con = ConexaoUtil.getInstance().getConnection();
+			String sql = "INSERT INTO ANIMAL(registro_id, tipo, peso, altura, data_ultima_medicao, raca, preco_compra, preco_venda) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+
+			PreparedStatement statement = con.prepareStatement(sql);
+			statement.setString(1, animal.getRaca());
+			statement.setString(2, animal.getTipo());
+			statement.setDouble(3, animal.getPeso());
+			statement.setDouble(4, animal.getAltura());
+			statement.setDate(5, (Date) animal.getDataUltimaMedicacao());
+			statement.setString(6, animal.getRaca());
+			statement.setDouble(7, animal.getPrecoCompra());
+			statement.setDouble(8, animal.getPrecoVenda());
+
+			statement.execute();
+
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void atualizar(Animal obj) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void deletar(Integer id) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public List<Animal> listarTodos() {
+		try {
+			con = ConexaoUtil.getInstance().getConnection();
+			List<Animal> lista = new ArrayList<Animal>();
+			String sql = "Select * from animal";
+			PreparedStatement preparador = con.prepareStatement(sql);
+			ResultSet resultados = preparador.executeQuery();
+			while (resultados.next()) {
+				Animal ani = new Animal();
+				ani.setAltura(resultados.getDouble("altura"));
+				ani.setDataNascimento(resultados.getDate("data_nascimento"));
+				ani.setDataUltimaMedicacao(resultados.getDate("data_ultima_medicao"));
+				ani.setPeso(resultados.getDouble("peso"));
+				ani.setPrecoCompra(resultados.getDouble("preco_compra"));
+				ani.setPrecoVenda(resultados.getDouble("preco_venda"));
+				ani.setRaca(resultados.getString("raca"));
+				ani.setRegistro(resultados.getInt("registro_id"));
+				ani.setTipo(resultados.getString("tipo"));
+			}
+
+			return lista;
+		} catch (SQLException e) {
+			System.out.println("Erro - " + e.getMessage());
+		}
+		return null;
+	}
+
+	public Animal buscarPorId(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	public void atualizarPesoAlturaMedicao(Animal animal, Long id) throws Exception {
+		con = ConexaoUtil.getInstance().getConnection();
+		String sql = "UPDATE animal SET peso = ?, altura = ?, data_ultima_medicao = ? WHERE registro_id = ?";
+
+		PreparedStatement statement = con.prepareStatement(sql);
+		statement.setDouble(1, animal.getPeso());
+		statement.setDouble(2, animal.getAltura());
+		statement.setDate(3, (Date) animal.getDataUltimaMedicacao());
+		statement.setLong(5, animal.getRegistro());
+
+		statement.execute();
+
+		statement.close();
+
+	}
+
+	public void atualizarPesoDataAtualizacao(Animal animal, Long id) {
+		try {
+			con = ConexaoUtil.getInstance().getConnection();
+			String sql = "UPDATE animal SET peso = ?, data_ultima_medicao = ? WHERE registro_id = ?";
+
+			PreparedStatement statement = con.prepareStatement(sql);
+			statement.setDouble(1, animal.getPeso());
+			statement.setDate(2, (Date) animal.getDataUltimaMedicacao());
+
+			statement.execute();
+
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void atualizarAlturaDataMedicao(Animal animal, Long id) {
+		try {
+			con = ConexaoUtil.getInstance().getConnection();
+			String sql = "UPDATE animal SET altura = ?, data_ultima_medicao = ? WHERE registro_id = ?";
+
+			PreparedStatement statement = con.prepareStatement(sql);
+			statement.setDouble(1, animal.getAltura());
+			statement.setDate(2, (Date) animal.getDataUltimaMedicacao());
+			statement.setLong(3, animal.getRegistro());
+			statement.execute();
+			statement.close();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void atualizarVenda(Animal animal, Long id) {
+		try {
+			con = ConexaoUtil.getInstance().getConnection();
+			String sql = "UPDATE animal SET preco_venda = ? WHERE registro_id = ?";
+
+			PreparedStatement statement = con.prepareStatement(sql);
+			statement.setDouble(1, animal.getPrecoVenda());
+			statement.setLong(2, animal.getRegistro());
+			statement.execute();
+
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void atualizarCompra(Animal animal, Long id) {
+		try {
+			con = ConexaoUtil.getInstance().getConnection();
+			String sql = "UPDATE animal SET preco_compra = ? WHERE registro_id = ?";
+			PreparedStatement statement = con.prepareStatement(sql);
+			statement.setDouble(1, animal.getPrecoCompra());
+			statement.setLong(2, animal.getRegistro());
+			statement.execute();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void atualizarCompraVenda(Animal animal, Long id) {
+		try {
+			con = ConexaoUtil.getInstance().getConnection();
+			String sql = "UPDATE animal SET preco_compra = ?, preco_venda =? WHERE registro_id = ?";
+			PreparedStatement statement = con.prepareStatement(sql);
+			statement.setDouble(1, animal.getPrecoCompra());
+			statement.setDouble(2, animal.getPrecoVenda());
+			statement.setLong(3, animal.getRegistro());
+			statement.execute();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void atualizarTipo(Animal animal, Long id) {
+		try {
+			con = ConexaoUtil.getInstance().getConnection();
+			String sql = "UPDATE animal SET tipo = ? WHERE registro_id = ?";
+			PreparedStatement statement = con.prepareStatement(sql);
+			statement.setString(1, animal.getTipo());
+			statement.setLong(2, animal.getRegistro());
+			statement.execute();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void atualizarRaca(Animal animal, Long id) throws Exception {
+		con = ConexaoUtil.getInstance().getConnection();
+		String sql = "UPDATE animal SET raca = ? WHERE registro_id = ?";
+		PreparedStatement statement = con.prepareStatement(sql);
+		statement.setString(1, animal.getRaca());
+		statement.setLong(2, animal.getRegistro());
+		statement.execute();
+		statement.close();
+
+	}
+
+	public void atualizarTipoRaca(Animal animal, Long id) throws Exception {
+		con = ConexaoUtil.getInstance().getConnection();
+		String sql = "UPDATE animal SET raca = ?, tipo = ? WHERE registro_id = ?";
+		PreparedStatement statement = con.prepareStatement(sql);
+		statement.setString(1, animal.getRaca());
+		statement.setString(2, animal.getTipo());
+		statement.setLong(3, animal.getRegistro());
+		statement.execute();
+		statement.close();
+
+	}
 
 }
