@@ -7,8 +7,6 @@ public interface GenericDAO<T> {
 	
 	void inserir(T obj) throws SQLException;
 	
-	void atualizar(T obj) throws SQLException;
-	
 	void deletar(Integer id) throws SQLException;
 	
 	List<T> listarTodos() throws SQLException;

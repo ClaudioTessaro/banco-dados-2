@@ -53,13 +53,6 @@ public class Animal implements Serializable{
 		return raca;
 	}
 
-	public Double getPrecoCompra() {
-		return precoCompra;
-	}
-
-	public Double getPrecoVenda() {
-		return precoVenda;
-	}
 
 	public void setRegistro(Integer registro) {
 		this.registro = registro;
@@ -89,6 +82,14 @@ public class Animal implements Serializable{
 		this.raca = raca;
 	}
 
+	public Double getPrecoCompra() {
+		return precoCompra;
+	}
+
+	public Double getPrecoVenda() {
+		return precoVenda;
+	}
+
 	public void setPrecoCompra(Double precoCompra) {
 		this.precoCompra = precoCompra;
 	}
@@ -96,5 +97,13 @@ public class Animal implements Serializable{
 	public void setPrecoVenda(Double precoVenda) {
 		this.precoVenda = precoVenda;
 	}
+
+	@Override
+	public String toString() {
+		return "Animal [registro=" + registro + ", tipo=" + tipo + ", peso=" + peso + ", altura=" + altura
+				+ ", dataUltimaMedicacao=" + dataUltimaMedicacao + ", dataNascimento=" + dataNascimento + ", raca="
+				+ raca + ", precoCompra=" + precoCompra + ", precoVenda=" + precoVenda + "]";
+	}
+
 	
 }

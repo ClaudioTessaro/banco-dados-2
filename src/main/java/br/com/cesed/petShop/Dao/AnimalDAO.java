@@ -18,10 +18,10 @@ public class AnimalDAO implements GenericDAO<Animal> {
 	public void inserir(Animal animal) {
 		try {
 			con = ConexaoUtil.getInstance().getConnection();
-			String sql = "INSERT INTO ANIMAL(registro_id, tipo, peso, altura, data_ultima_medicao, raca, preco_compra, preco_venda, data_nascimento) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO ANIMAL(registro_id,tipo, peso, altura, data_ultima_medicao, raca, preco_compra, preco_venda, data_nascimento) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			PreparedStatement statement = con.prepareStatement(sql);
-			statement.setString(1, animal.getRaca());
+			statement.setLong(1, animal.getRegistro());
 			statement.setString(2, animal.getTipo());
 			statement.setDouble(3, animal.getPeso());
 			statement.setDouble(4, animal.getAltura());
@@ -46,7 +46,7 @@ public class AnimalDAO implements GenericDAO<Animal> {
 			String sql = "INSERT INTO ANIMAL(registro_id, tipo, raca, preco_compra, preco_venda, data_nascimento) VALUES(?, ?, ?, ?, ?, ?)";
 
 			PreparedStatement statement = con.prepareStatement(sql);
-			statement.setString(1, animal.getRaca());
+			statement.setLong(1, animal.getRegistro());
 			statement.setString(2, animal.getTipo());
 			statement.setString(3, animal.getRaca());
 			statement.setDouble(4, animal.getPrecoCompra());
@@ -68,7 +68,7 @@ public class AnimalDAO implements GenericDAO<Animal> {
 			String sql = "INSERT INTO ANIMAL(registro_id, tipo, peso, altura, data_ultima_medicao, raca, preco_compra, data_nascimento) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 
 			PreparedStatement statement = con.prepareStatement(sql);
-			statement.setString(1, animal.getRaca());
+			statement.setLong(1, animal.getRegistro());
 			statement.setString(2, animal.getTipo());
 			statement.setString(3, animal.getRaca());
 			statement.setDouble(4, animal.getPrecoCompra());
@@ -89,7 +89,7 @@ public class AnimalDAO implements GenericDAO<Animal> {
 			String sql = "INSERT INTO ANIMAL(registro_id, tipo, peso, altura, data_ultima_medicao, raca, preco_venda, data_nascimento) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 
 			PreparedStatement statement = con.prepareStatement(sql);
-			statement.setString(1, animal.getRaca());
+			statement.setLong(1, animal.getRegistro());
 			statement.setString(2, animal.getTipo());
 			statement.setDouble(3, animal.getPeso());
 			statement.setDouble(4, animal.getAltura());
@@ -113,7 +113,7 @@ public class AnimalDAO implements GenericDAO<Animal> {
 			String sql = "INSERT INTO ANIMAL(registro_id, tipo, peso, altura, data_ultima_medicao, raca, data_nascimento) VALUES(?, ?, ?, ?, ?, ?, ?)";
 
 			PreparedStatement statement = con.prepareStatement(sql);
-			statement.setString(1, animal.getRaca());
+			statement.setLong(1, animal.getRegistro());
 			statement.setString(2, animal.getTipo());
 			statement.setDouble(3, animal.getPeso());
 			statement.setDouble(4, animal.getAltura());
@@ -136,7 +136,7 @@ public class AnimalDAO implements GenericDAO<Animal> {
 			String sql = "INSERT INTO ANIMAL(registro_id, tipo, peso, altura, data_ultima_medicao, raca, preco_compra, preco_venda) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 
 			PreparedStatement statement = con.prepareStatement(sql);
-			statement.setString(1, animal.getRaca());
+			statement.setLong(1, animal.getRegistro());
 			statement.setString(2, animal.getTipo());
 			statement.setDouble(3, animal.getPeso());
 			statement.setDouble(4, animal.getAltura());
@@ -160,7 +160,31 @@ public class AnimalDAO implements GenericDAO<Animal> {
 	}
 
 	public void deletar(Integer id) {
-		// TODO Auto-generated method stub
+		try {
+			con = ConexaoUtil.getInstance().getConnection();
+			String sql = "DELETE FROM animal WHERE registro_id = ?";
+			PreparedStatement prepared = con.prepareStatement(sql);
+			prepared.setLong(1, id);
+			prepared.execute();
+			prepared.close();
+					
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	public void deletarPorTipo(String tipo) {
+		try {
+			con = ConexaoUtil.getInstance().getConnection();
+			String sql = "DELETE FROM animal WHERE tripo = ?";
+			PreparedStatement prepared = con.prepareStatement(sql);
+			prepared.setString(1, tipo);
+			prepared.execute();
+			prepared.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
 	}
 
@@ -182,6 +206,7 @@ public class AnimalDAO implements GenericDAO<Animal> {
 				ani.setRaca(resultados.getString("raca"));
 				ani.setRegistro(resultados.getInt("registro_id"));
 				ani.setTipo(resultados.getString("tipo"));
+				lista.add(ani);
 			}
 
 			return lista;
