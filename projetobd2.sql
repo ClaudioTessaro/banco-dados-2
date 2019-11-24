@@ -73,3 +73,24 @@ create table venda_item(
 		REFERENCES funcionario (id_matricula) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION	
 );
 
+CREATE FUNCTION add_sal_func() RETURNS trigger AS $add_sal_func$
+	BEGIN
+		IF new.funcao = 'caixa' THEN
+				new.salario := 1500.00;
+		ELSEIF new.funcao = 'veterinário' THEN
+			 new.salario := 2500.00;
+		ELSEIF new.funcao = 'atendente' THEN
+			 new.salario := 1000.00;
+		ELSEIF new.funcao = 'cuidador' THEN
+			 new.salario := 1700.00;
+		END IF;
+		RETURN new;
+	END;
+
+$add_sal_func$ LANGUAGE plpgsql;
+
+CREATE TRIGGER tgr_SalarioFunc
+BEFORE INSERT ON funcionario
+FOR EACH ROW EXECUTE PROCEDURE add_sal_func();
+
+
