@@ -237,7 +237,7 @@ public class VendaItemDAO {
 
 			PreparedStatement statement = con.prepareStatement(sql);
 			statement.setLong(1, venda.getNotaFiscal());
-			statement.setLong(2, venda.getNotaFiscal());
+			statement.setLong(2, id);
 
 			statement.execute();
 
@@ -255,7 +255,7 @@ public class VendaItemDAO {
 
 			PreparedStatement statement = con.prepareStatement(sql);
 			statement.setLong(1, venda.getCod_item());
-			statement.setLong(2, venda.getNotaFiscal());
+			statement.setLong(2, id);
 
 			statement.execute();
 
@@ -273,7 +273,7 @@ public class VendaItemDAO {
 
 			PreparedStatement statement = con.prepareStatement(sql);
 			statement.setLong(1, venda.getMatricula());
-			statement.setLong(2, venda.getNotaFiscal());
+			statement.setLong(2, id);
 
 			statement.execute();
 
@@ -294,7 +294,7 @@ public class VendaItemDAO {
 			statement.setLong(1, venda.getDia());
 			statement.setLong(2, venda.getMes());
 			statement.setLong(3, venda.getAno());
-			statement.setLong(4, venda.getNotaFiscal());
+			statement.setLong(4, id);
 			statement.execute();
 			
 			statement.close();

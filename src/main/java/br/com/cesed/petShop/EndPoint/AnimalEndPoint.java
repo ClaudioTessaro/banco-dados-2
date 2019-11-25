@@ -72,7 +72,7 @@ public class AnimalEndPoint {
 
 	@ApiOperation(value = "Atualizar altura, peso e data de medição")
 	@PutMapping("/atualiza-peso-altura-data-medicao/{id}")
-	public ResponseEntity<Void> atualizarPesoAlturaDataMedicao(@RequestBody Animal animal, @PathVariable Long id) throws Exception {
+	public ResponseEntity<Void> atualizarPesoAlturaDataMedicao(@RequestBody Animal animal, @RequestParam Long id) throws Exception {
 		animalService.alterarPesoAlturaMedicao(animal, id);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
@@ -80,7 +80,7 @@ public class AnimalEndPoint {
 	
 	@ApiOperation(value = "Atualizar peso e data de medição")
 	@PutMapping("/atualiza-peso-data-medicao/{id}")
-	public ResponseEntity<Void> atualizarPesoDataMedicao(@RequestBody Animal animal, @PathVariable Long id) throws Exception {
+	public ResponseEntity<Void> atualizarPesoDataMedicao(@RequestBody Animal animal, @RequestParam Long id) throws Exception {
 		animalService.alterarPesoDataAtualizacao(animal, id);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
@@ -94,42 +94,42 @@ public class AnimalEndPoint {
 
 	@ApiOperation(value = "Atualizar preco de venda")
 	@PutMapping("/atualiza-preco-venda/{id}")
-	public ResponseEntity<Void> atualizarVenda(@RequestBody Animal animal, @PathVariable Long id) throws Exception {
+	public ResponseEntity<Void> atualizarVenda(@RequestBody Animal animal, @RequestParam Long id) throws Exception {
 		animalService.alterarPrecoVenda(animal, id);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "Atualizar preco de compra")
 	@PutMapping("/atualiza-preco-compra/{id}")
-	public ResponseEntity<Void> atualizarCompra(@RequestBody Animal animal, @PathVariable Long id) throws Exception {
+	public ResponseEntity<Void> atualizarCompra(@RequestBody Animal animal, @RequestParam Long id) throws Exception {
 		animalService.alterarPrecoCompra(animal, id);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "Atualizar preco de compra e venda")
 	@PutMapping("/atualiza-preco-compra-venda/{id}")
-	public ResponseEntity<Void> atualizarCompraVenda(@RequestBody Animal animal, @PathVariable Long id) throws Exception {
+	public ResponseEntity<Void> atualizarCompraVenda(@RequestBody Animal animal, @RequestParam Long id) throws Exception {
 		animalService.alterarPrecoCompraVenda(animal, id);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "Atualizar tipo")
 	@PutMapping("/atualiza-tipo/{id}")
-	public ResponseEntity<Void> atualizarTipo(@RequestBody Animal animal, @PathVariable Long id) throws Exception {
+	public ResponseEntity<Void> atualizarTipo(@RequestBody Animal animal, @RequestParam Long id) throws Exception {
 		animalService.alterarTipo(animal, id);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "Atualizar tipo e raca")
 	@PutMapping("/atualiza-raca/{id}")
-	public ResponseEntity<Void> atualizarRaca(@RequestBody Animal animal, @PathVariable Long id) throws Exception {
+	public ResponseEntity<Void> atualizarRaca(@RequestBody Animal animal, @RequestParam Long id) throws Exception {
 		animalService.alterarRaca(animal, id);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "Atualizar tipo e raca")
 	@PutMapping("/atualiza-tipo-raca/{id}")
-	public ResponseEntity<Void> atualizarTipoRaca(@RequestBody Animal animal, @PathVariable Long id) throws Exception {
+	public ResponseEntity<Void> atualizarTipoRaca(@RequestBody Animal animal, @RequestParam Long id) throws Exception {
 		animalService.alterarTipoRaca(animal, id);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
