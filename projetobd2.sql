@@ -110,6 +110,7 @@ DECLARE
 BEGIN
 	SELECT (preco_venda) into preco_venda_res FROM animal WHERE new.registro_animal = animal.registro_id;
 	new.valor_final := preco_venda_res - (preco_venda_res*(new.desconto/100));
+	new.comissao := new.valor_final*0.05;
 	RETURN new;
 END;
 $valorFinalAnimal$ LANGUAGE plpgsql;
@@ -124,6 +125,7 @@ DECLARE
 BEGIN
 	SELECT (preco_venda) into preco_loja_res FROM item WHERE new.cod_item = item.codigo;
 	new.valor_final := preco_loja_res - (preco_loja_res*(new.desconto/100));
+	new.comissao := new.valor_final*0.02;
 	RETURN new;
 END;
 $valorFinalItem$ LANGUAGE plpgsql;
@@ -131,5 +133,6 @@ $valorFinalItem$ LANGUAGE plpgsql;
 CREATE TRIGGER tgr_ValorFinalItem
 BEFORE INSERT OR UPDATE ON venda_item
 FOR EACH ROW EXECUTE PROCEDURE valorFinalItem();
+
 
 
