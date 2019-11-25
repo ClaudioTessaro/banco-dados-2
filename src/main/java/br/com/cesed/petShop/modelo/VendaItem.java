@@ -20,7 +20,7 @@ public class VendaItem implements Serializable {
 	
 	private double comissao;
 	
-	private double desconto;
+	private double desconto = 0;
 
 	private double valorFinal;
 
