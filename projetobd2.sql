@@ -90,7 +90,46 @@ CREATE FUNCTION add_sal_func() RETURNS trigger AS $add_sal_func$
 $add_sal_func$ LANGUAGE plpgsql;
 
 CREATE TRIGGER tgr_SalarioFunc
-BEFORE INSERT ON funcionario
+BEFORE INSERT OR UPDATE ON funcionario
 FOR EACH ROW EXECUTE PROCEDURE add_sal_func();
+
+CREATE FUNCTION rem_qtd() RETURNS trigger AS $rem_qtd$
+BEGIN
+	UPDATE item SET quantidade = quantidade - 1 WHERE new.cod_item = item.codigo;
+	RETURN NULL;
+END;
+$rem_qtd$ LANGUAGE plpgsql;
+
+CREATE TRIGGER tgr_RemQtd
+AFTER INSERT ON venda_item
+FOR EACH ROW EXECUTE PROCEDURE rem_qtd();
+
+CREATE FUNCTION valorFinalAnimal() RETURNS trigger AS $valorFinalAnimal$
+DECLARE
+	preco_venda_res Money;
+BEGIN
+	SELECT (preco_venda) into preco_venda_res FROM animal WHERE new.registro_animal = animal.registro_id;
+	new.valor_final := preco_venda_res - (preco_venda_res*(new.desconto/100));
+	RETURN new;
+END;
+$valorFinalAnimal$ LANGUAGE plpgsql;
+
+CREATE TRIGGER tgr_ValorFinalAnimal
+BEFORE INSERT OR UPDATE ON venda_animal
+FOR EACH ROW EXECUTE PROCEDURE valorFinalAnimal();
+
+CREATE FUNCTION valorFinalItem() RETURNS trigger AS $valorFinalItem$
+DECLARE
+	preco_loja_res Money;
+BEGIN
+	SELECT (preco_venda) into preco_loja_res FROM item WHERE new.cod_item = item.codigo;
+	new.valor_final := preco_loja_res - (preco_loja_res*(new.desconto/100));
+	RETURN new;
+END;
+$valorFinalItem$ LANGUAGE plpgsql;
+
+CREATE TRIGGER tgr_ValorFinalItem
+BEFORE INSERT OR UPDATE ON venda_item
+FOR EACH ROW EXECUTE PROCEDURE valorFinalItem();
 
 
