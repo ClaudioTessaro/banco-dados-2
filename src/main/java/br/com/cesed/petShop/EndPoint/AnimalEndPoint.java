@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import br.com.cesed.petShop.modelo.Animal;
 import br.com.cesed.petShop.service.AnimalService;
@@ -86,7 +87,7 @@ public class AnimalEndPoint {
 
 	@ApiOperation(value = "Atualizar altura e data de medição")
 	@PutMapping("/atualiza-altura-data-medicao/{id}")
-	public ResponseEntity<Void> atualizarAlturaDataMedicao(@RequestBody Animal animal, @PathVariable Long id) throws Exception {
+	public ResponseEntity<Void> atualizarAlturaDataMedicao(@RequestBody Animal animal, @RequestParam Long id) throws Exception {
 		animalService.alterarAlturaDataMedicao(animal, id);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
@@ -134,7 +135,7 @@ public class AnimalEndPoint {
 	}
 	
 	@ApiOperation(value = "Deletar por registro")
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/registro/{id}")
 	public ResponseEntity<Void> deletarPorRegistr(@PathVariable Integer id) throws Exception {
 		animalService.deletarPorRegistro(id);
 		return new ResponseEntity<Void>(HttpStatus.OK);

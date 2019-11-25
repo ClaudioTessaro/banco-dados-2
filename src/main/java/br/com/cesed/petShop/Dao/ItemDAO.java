@@ -1,7 +1,6 @@
 package br.com.cesed.petShop.Dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,7 +28,7 @@ public class ItemDAO implements GenericDAO<Item> {
 			statement.setString(3, item.getTipo());
 			statement.setDouble(4, item.getPrecoFornecedor());
 			statement.setDouble(5, item.getPrecoLoja());
-			statement.setDate(6, (Date) item.getValidade());
+			statement.setDate(6,  item.getValidade());
 			statement.setInt(7, item.getQuantidade());
 			statement.execute();
 
@@ -71,7 +70,7 @@ public class ItemDAO implements GenericDAO<Item> {
 			statement.setString(2, item.getDescricao());
 			statement.setString(3, item.getTipo());
 			statement.setDouble(4, item.getPrecoFornecedor());
-			statement.setDate(5, (Date) item.getValidade());
+			statement.setDate(5,  item.getValidade());
 			statement.setInt(6, item.getQuantidade());
 			statement.execute();
 

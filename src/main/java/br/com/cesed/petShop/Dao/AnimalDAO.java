@@ -261,7 +261,7 @@ public class AnimalDAO implements GenericDAO<Animal> {
 		statement.setDouble(1, animal.getPeso());
 		statement.setDouble(2, animal.getAltura());
 		statement.setDate(3, animal.getDataUltimaMedicacao());
-		statement.setLong(5, animal.getRegistro());
+		statement.setLong(4, id);
 
 		statement.execute();
 
@@ -277,6 +277,7 @@ public class AnimalDAO implements GenericDAO<Animal> {
 			PreparedStatement statement = con.prepareStatement(sql);
 			statement.setDouble(1, animal.getPeso());
 			statement.setDate(2, animal.getDataUltimaMedicacao());
+			statement.setLong(3, id);
 
 			statement.execute();
 
@@ -295,10 +296,9 @@ public class AnimalDAO implements GenericDAO<Animal> {
 			PreparedStatement statement = con.prepareStatement(sql);
 			statement.setDouble(1, animal.getAltura());
 			statement.setDate(2, animal.getDataUltimaMedicacao());
-			statement.setLong(3, animal.getRegistro());
+			statement.setLong(3, id);
 			statement.execute();
 			statement.close();
-			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -312,7 +312,7 @@ public class AnimalDAO implements GenericDAO<Animal> {
 
 			PreparedStatement statement = con.prepareStatement(sql);
 			statement.setDouble(1, animal.getPrecoVenda());
-			statement.setLong(2, animal.getRegistro());
+			statement.setLong(2, id);
 			statement.execute();
 
 			statement.close();
@@ -328,7 +328,7 @@ public class AnimalDAO implements GenericDAO<Animal> {
 			String sql = "UPDATE animal SET preco_compra = ? WHERE registro_id = ?";
 			PreparedStatement statement = con.prepareStatement(sql);
 			statement.setDouble(1, animal.getPrecoCompra());
-			statement.setLong(2, animal.getRegistro());
+			statement.setLong(2, id);
 			statement.execute();
 			statement.close();
 		} catch (SQLException e) {

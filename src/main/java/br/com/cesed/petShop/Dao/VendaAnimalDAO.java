@@ -73,7 +73,66 @@ public class VendaAnimalDAO implements GenericDAO<VendaAnimal>{
 		}
 		return null;
 	}
+	
+	public List<VendaAnimal> listarTodosPorDescricao(String tipo) throws SQLException {
+		try {
+			con = ConexaoUtil.getInstance().getConnection();
+			List<VendaAnimal> lista = new ArrayList<VendaAnimal>();
+			String sql = "Select * from venda_animal where tipo = ?";
+			PreparedStatement preparador = con.prepareStatement(sql);
+			preparador.setString(1, tipo);
+			ResultSet resultados = preparador.executeQuery();
+			while (resultados.next()) {
+				VendaAnimal venda = new VendaAnimal();
+				venda.setNotaFiscal(resultados.getInt("nota_fiscal"));
+				venda.setMatFunc(resultados.getInt("matricula_funcionario"));
+				venda.setRegAnimal(resultados.getInt("registro_animal"));
+				venda.setAno(resultados.getInt("ano"));
+				venda.setMes(resultados.getInt("mes"));
+				venda.setDia(resultados.getInt("dia"));
+				venda.setComissao(resultados.getDouble("comissao"));
+				venda.setDesconto(resultados.getDouble("desconto"));
+				venda.setValorFinal(resultados.getDouble("valor_final"));
+				lista.add(venda);
+			}
 
+			return lista;
+		} catch (SQLException e) {
+			System.out.println("Erro - " + e.getMessage());
+		}
+		return null;
+	}
+
+	public List<VendaAnimal> listarTodosPorNomeVendedor(String nomeVendedor) throws SQLException {
+		try {
+			con = ConexaoUtil.getInstance().getConnection();
+			List<VendaAnimal> lista = new ArrayList<VendaAnimal>();
+			String sql = "Select * from venda_animal where tipo = ?";
+			PreparedStatement preparador = con.prepareStatement(sql);
+			preparador.setString(1, nomeVendedor);
+			ResultSet resultados = preparador.executeQuery();
+			while (resultados.next()) {
+				VendaAnimal venda = new VendaAnimal();
+				venda.setNotaFiscal(resultados.getInt("nota_fiscal"));
+				venda.setMatFunc(resultados.getInt("matricula_funcionario"));
+				venda.setRegAnimal(resultados.getInt("registro_animal"));
+				venda.setAno(resultados.getInt("ano"));
+				venda.setMes(resultados.getInt("mes"));
+				venda.setDia(resultados.getInt("dia"));
+				venda.setComissao(resultados.getDouble("comissao"));
+				venda.setDesconto(resultados.getDouble("desconto"));
+				venda.setValorFinal(resultados.getDouble("valor_final"));
+				lista.add(venda);
+			}
+
+			return lista;
+		} catch (SQLException e) {
+			System.out.println("Erro - " + e.getMessage());
+		}
+		return null;
+	}
+
+	
 	public VendaAnimal buscarPorId(Integer id) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;

@@ -8,9 +8,9 @@ public class VendaItem implements Serializable {
 	
 	private Long notaFiscal;
 	
-	private Integer codItem;
+	private Integer matricula;
 	
-	private Integer matFunc;
+	private Integer cod_item;
 	
 	private Integer dia;
 	
@@ -30,22 +30,6 @@ public class VendaItem implements Serializable {
 
 	public void setNotaFiscal(Long notaFiscal) {
 		this.notaFiscal = notaFiscal;
-	}
-
-	public Integer getCodItem() {
-		return codItem;
-	}
-
-	public void setCodItem(Integer codItem) {
-		this.codItem = codItem;
-	}
-
-	public Integer getMatFunc() {
-		return matFunc;
-	}
-
-	public void setMatFunc(Integer matFunc) {
-		this.matFunc = matFunc;
 	}
 
 	public Integer getDia() {
@@ -99,9 +83,21 @@ public class VendaItem implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
-	
-	
-	
+
+	public Integer getMatricula() {
+		return matricula;
+	}
+
+	public Integer getCod_item() {
+		return cod_item;
+	}
+
+	public void setMatricula(Integer matricula) {
+		this.matricula = matricula;
+	}
+
+	public void setCod_item(Integer cod_item) {
+		this.cod_item = cod_item;
+	}
 
 }

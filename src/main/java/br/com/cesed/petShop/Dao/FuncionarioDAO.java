@@ -1,7 +1,6 @@
 package br.com.cesed.petShop.Dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,10 +29,10 @@ public class FuncionarioDAO implements GenericDAO<Funcionario>{
 			statement.setString(4, funcionario.getEndereco());
 			statement.setString(5, funcionario.getTelefone());
 			statement.setDouble(6, funcionario.getSalario());
-			statement.setDate(7, (Date) funcionario.getDtNascimento());
-			statement.setDate(8, (Date) funcionario.getDtAdmissao());
+			statement.setDate(7,  funcionario.getDtNascimento());
+			statement.setDate(8,  funcionario.getDtAdmissao());
 			statement.setString(9, funcionario.getFuncao());
-			statement.setDate(10, (Date) funcionario.getDtDemissao());
+			statement.setDate(10,  funcionario.getDtDemissao());
 			
 			
 			statement.execute();
@@ -56,10 +55,10 @@ public class FuncionarioDAO implements GenericDAO<Funcionario>{
 			statement.setString(3, funcionario.getCpf());
 			statement.setString(4, funcionario.getEndereco());
 			statement.setString(5, funcionario.getTelefone());
-			statement.setDate(6, (Date) funcionario.getDtNascimento());
-			statement.setDate(7, (Date) funcionario.getDtAdmissao());
+			statement.setDate(6,  funcionario.getDtNascimento());
+			statement.setDate(7,  funcionario.getDtAdmissao());
 			statement.setString(8, funcionario.getFuncao());
-			statement.setDate(9, (Date) funcionario.getDtDemissao());
+			statement.setDate(9,  funcionario.getDtDemissao());
 			statement.execute();
 			statement.close();
 			con.close();
@@ -80,10 +79,10 @@ public class FuncionarioDAO implements GenericDAO<Funcionario>{
 			statement.setString(3, funcionario.getCpf());
 			statement.setString(4, funcionario.getEndereco());
 			statement.setDouble(5, funcionario.getSalario());
-			statement.setDate(6, (Date) funcionario.getDtNascimento());
-			statement.setDate(7, (Date) funcionario.getDtAdmissao());
+			statement.setDate(6,  funcionario.getDtNascimento());
+			statement.setDate(7,  funcionario.getDtAdmissao());
 			statement.setString(8, funcionario.getFuncao());
-			statement.setDate(9, (Date) funcionario.getDtDemissao());
+			statement.setDate(9,  funcionario.getDtDemissao());
 			statement.execute();
 			statement.close();
 			con.close();
@@ -113,7 +112,7 @@ public class FuncionarioDAO implements GenericDAO<Funcionario>{
 		try {
 			con = ConexaoUtil.getInstance().getConnection();
 			List<Funcionario> lista = new ArrayList<Funcionario>();
-			String sql = "Select * from animal";
+			String sql = "Select * from funcionario";
 			PreparedStatement preparador = con.prepareStatement(sql);
 			ResultSet resultados = preparador.executeQuery();
 			while (resultados.next()) {
@@ -144,25 +143,29 @@ public class FuncionarioDAO implements GenericDAO<Funcionario>{
 		return null;
 	}
 	
-	public Funcionario buscarPorNome(String nome) {
+	public List<Funcionario> buscarPorNome(String nome) {
 		try {
 			con = ConexaoUtil.getInstance().getConnection();
-			String sql = "Select * from funcionario = ?";
+			List<Funcionario> lista = new ArrayList<Funcionario>();
+			String sql = "Select * from funcionario where nome= ?";
 			PreparedStatement preparador = con.prepareStatement(sql);
 			preparador.setString(1, nome);
 			ResultSet resultados = preparador.executeQuery();
-			Funcionario func = new Funcionario();
-			func.setCpf(resultados.getString("cpf"));
-			func.setDtAdmissao(resultados.getDate("data_admissao"));
-			func.setDtDemissao(resultados.getDate("data_demissao"));
-			func.setDtNascimento(resultados.getDate("data_nascimento"));
-			func.setEndereco(resultados.getString("endereco"));
-			func.setMatricula(resultados.getLong("id_matricula"));
-			func.setNome(resultados.getString("nome"));
-			func.setSalario(resultados.getDouble("salario"));
-			func.setTelefone(resultados.getString("telefone"));
-			func.setFuncao(resultados.getString("funcao"));
-			return func;
+			while (resultados.next()) {
+				Funcionario func = new Funcionario();
+				func.setCpf(resultados.getString("cpf"));
+				func.setDtAdmissao(resultados.getDate("data_admissao"));
+				func.setDtDemissao(resultados.getDate("data_demissao"));
+				func.setDtNascimento(resultados.getDate("data_nascimento"));
+				func.setEndereco(resultados.getString("endereco"));
+				func.setMatricula(resultados.getLong("id_matricula"));
+				func.setNome(resultados.getString("nome"));
+				func.setSalario(resultados.getDouble("salario"));
+				func.setTelefone(resultados.getString("telefone"));
+				func.setFuncao(resultados.getString("funcao"));
+				lista.add(func);
+			}
+			return lista;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			
@@ -218,7 +221,7 @@ public class FuncionarioDAO implements GenericDAO<Funcionario>{
 		con = ConexaoUtil.getInstance().getConnection();
 		String sql = "UPDATE funcionario SET data_demissao = ? WHERE id_matricula = ?";
 		PreparedStatement statement = con.prepareStatement(sql);
-		statement.setDate(1, (Date) funcionario.getDtDemissao());
+		statement.setDate(1,  funcionario.getDtDemissao());
 		statement.setLong(2, matricula);
 		statement.execute();
 		statement.close();
