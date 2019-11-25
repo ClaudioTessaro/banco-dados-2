@@ -3,12 +3,17 @@ package br.com.cesed.petShop.Dao;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.stereotype.Repository;
 
 import br.com.cesed.petShop.Util.ConexaoUtil;
 import br.com.cesed.petShop.modelo.Item;
 
+@Repository
 public class ItemDAO implements GenericDAO<Item> {
 
 	private Connection con;
@@ -145,7 +150,82 @@ public class ItemDAO implements GenericDAO<Item> {
 	
 
 	public List<Item> listarTodos() throws SQLException {
-		// TODO Auto-generated method stub
+		try {
+			con = ConexaoUtil.getInstance().getConnection();
+			List<Item> lista = new ArrayList<Item>();
+			String sql = "Select * from item";
+			PreparedStatement preparador = con.prepareStatement(sql);
+			ResultSet resultados = preparador.executeQuery();
+			while (resultados.next()) {
+				Item item = new Item();
+				item.setId(resultados.getLong("codigo"));
+				item.setDescricao(resultados.getString("descricao"));
+				item.setTipo(resultados.getString("tipo"));
+				item.setPrecoFornecedor(resultados.getDouble("preco_fornecedor"));
+				item.setPrecoLoja(resultados.getDouble("preco_loja"));
+				item.setQuantidade(resultados.getInt("quantidade"));
+				item.setValidade(resultados.getDate("validade"));
+				lista.add(item);
+			}
+
+			return lista;
+		} catch (SQLException e) {
+			System.out.println("Erro - " + e.getMessage());
+		}
+		return null;
+	}
+	
+	public List<Item> listarTodosPorDescricao(String descricao) throws SQLException {
+		try {
+			con = ConexaoUtil.getInstance().getConnection();
+			List<Item> lista = new ArrayList<Item>();
+			String sql = "Select * from item where descricao = ?";
+			PreparedStatement preparador = con.prepareStatement(sql);
+			preparador.setString(1, descricao);
+			ResultSet resultados = preparador.executeQuery();
+			while (resultados.next()) {
+				Item item = new Item();
+				item.setId(resultados.getLong("codigo"));
+				item.setDescricao(resultados.getString("descricao"));
+				item.setTipo(resultados.getString("tipo"));
+				item.setPrecoFornecedor(resultados.getDouble("preco_fornecedor"));
+				item.setPrecoLoja(resultados.getDouble("preco_loja"));
+				item.setQuantidade(resultados.getInt("quantidade"));
+				item.setValidade(resultados.getDate("validade"));
+				lista.add(item);
+			}
+
+			return lista;
+		} catch (SQLException e) {
+			System.out.println("Erro - " + e.getMessage());
+		}
+		return null;
+	}
+	
+	public List<Item> listarTodosPorTipo(String tipo) throws SQLException {
+		try {
+			con = ConexaoUtil.getInstance().getConnection();
+			List<Item> lista = new ArrayList<Item>();
+			String sql = "Select * from item where tipo = ?";
+			PreparedStatement preparador = con.prepareStatement(sql);
+			preparador.setString(1, tipo);
+			ResultSet resultados = preparador.executeQuery();
+			while (resultados.next()) {
+				Item item = new Item();
+				item.setId(resultados.getLong("codigo"));
+				item.setDescricao(resultados.getString("descricao"));
+				item.setTipo(resultados.getString("tipo"));
+				item.setPrecoFornecedor(resultados.getDouble("preco_fornecedor"));
+				item.setPrecoLoja(resultados.getDouble("preco_loja"));
+				item.setQuantidade(resultados.getInt("quantidade"));
+				item.setValidade(resultados.getDate("validade"));
+				lista.add(item);
+			}
+
+			return lista;
+		} catch (SQLException e) {
+			System.out.println("Erro - " + e.getMessage());
+		}
 		return null;
 	}
 

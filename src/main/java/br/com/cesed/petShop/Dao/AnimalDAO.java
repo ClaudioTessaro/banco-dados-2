@@ -8,9 +8,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import br.com.cesed.petShop.Util.ConexaoUtil;
 import br.com.cesed.petShop.modelo.Animal;
 
+@Repository
 public class AnimalDAO implements GenericDAO<Animal> {
 
 	private Connection con;
@@ -25,11 +28,11 @@ public class AnimalDAO implements GenericDAO<Animal> {
 			statement.setString(2, animal.getTipo());
 			statement.setDouble(3, animal.getPeso());
 			statement.setDouble(4, animal.getAltura());
-			statement.setDate(5, (Date) animal.getDataUltimaMedicacao());
+			statement.setDate(5, animal.getDataUltimaMedicacao());
 			statement.setString(6, animal.getRaca());
 			statement.setDouble(7, animal.getPrecoCompra());
 			statement.setDouble(8, animal.getPrecoVenda());
-			statement.setDate(9, (Date) animal.getDataNascimento());
+			statement.setDate(9, animal.getDataNascimento());
 
 			statement.execute();
 
@@ -51,7 +54,7 @@ public class AnimalDAO implements GenericDAO<Animal> {
 			statement.setString(3, animal.getRaca());
 			statement.setDouble(4, animal.getPrecoCompra());
 			statement.setDouble(5, animal.getPrecoVenda());
-			statement.setDate(6, (Date) animal.getDataNascimento());
+			statement.setDate(6, animal.getDataNascimento());
 
 			statement.execute();
 
@@ -72,7 +75,7 @@ public class AnimalDAO implements GenericDAO<Animal> {
 			statement.setString(2, animal.getTipo());
 			statement.setString(3, animal.getRaca());
 			statement.setDouble(4, animal.getPrecoCompra());
-			statement.setDate(5, (Date) animal.getDataNascimento());
+			statement.setDate(5,animal.getDataNascimento());
 
 			statement.execute();
 
@@ -96,7 +99,7 @@ public class AnimalDAO implements GenericDAO<Animal> {
 			statement.setDate(5, (Date) animal.getDataUltimaMedicacao());
 			statement.setString(6, animal.getRaca());
 			statement.setDouble(7, animal.getPrecoVenda());
-			statement.setDate(8, (Date) animal.getDataNascimento());
+			statement.setDate(8, animal.getDataNascimento());
 
 			statement.execute();
 
@@ -117,9 +120,9 @@ public class AnimalDAO implements GenericDAO<Animal> {
 			statement.setString(2, animal.getTipo());
 			statement.setDouble(3, animal.getPeso());
 			statement.setDouble(4, animal.getAltura());
-			statement.setDate(5, (Date) animal.getDataUltimaMedicacao());
+			statement.setDate(5, animal.getDataUltimaMedicacao());
 			statement.setString(6, animal.getRaca());
-			statement.setDate(7, (Date) animal.getDataNascimento());
+			statement.setDate(7, animal.getDataNascimento());
 
 			statement.execute();
 
@@ -140,7 +143,7 @@ public class AnimalDAO implements GenericDAO<Animal> {
 			statement.setString(2, animal.getTipo());
 			statement.setDouble(3, animal.getPeso());
 			statement.setDouble(4, animal.getAltura());
-			statement.setDate(5, (Date) animal.getDataUltimaMedicacao());
+			statement.setDate(5, animal.getDataUltimaMedicacao());
 			statement.setString(6, animal.getRaca());
 			statement.setDouble(7, animal.getPrecoCompra());
 			statement.setDouble(8, animal.getPrecoVenda());
@@ -215,6 +218,35 @@ public class AnimalDAO implements GenericDAO<Animal> {
 		}
 		return null;
 	}
+	
+	public List<Animal> listarTodosPorTipo(String tipo) {
+		try {
+			con = ConexaoUtil.getInstance().getConnection();
+			List<Animal> lista = new ArrayList<Animal>();
+			String sql = "Select * from animal where tipo = ?";
+			PreparedStatement preparador = con.prepareStatement(sql);
+			preparador.setString(1, tipo);
+			ResultSet resultados = preparador.executeQuery();
+			while (resultados.next()) {
+				Animal ani = new Animal();
+				ani.setAltura(resultados.getDouble("altura"));
+				ani.setDataNascimento(resultados.getDate("data_nascimento"));
+				ani.setDataUltimaMedicacao(resultados.getDate("data_ultima_medicao"));
+				ani.setPeso(resultados.getDouble("peso"));
+				ani.setPrecoCompra(resultados.getDouble("preco_compra"));
+				ani.setPrecoVenda(resultados.getDouble("preco_venda"));
+				ani.setRaca(resultados.getString("raca"));
+				ani.setRegistro(resultados.getInt("registro_id"));
+				ani.setTipo(resultados.getString("tipo"));
+				lista.add(ani);
+			}
+
+			return lista;
+		} catch (SQLException e) {
+			System.out.println("Erro - " + e.getMessage());
+		}
+		return null;
+	}
 
 	public Animal buscarPorId(Integer id) {
 		// TODO Auto-generated method stub
@@ -228,7 +260,7 @@ public class AnimalDAO implements GenericDAO<Animal> {
 		PreparedStatement statement = con.prepareStatement(sql);
 		statement.setDouble(1, animal.getPeso());
 		statement.setDouble(2, animal.getAltura());
-		statement.setDate(3, (Date) animal.getDataUltimaMedicacao());
+		statement.setDate(3, animal.getDataUltimaMedicacao());
 		statement.setLong(5, animal.getRegistro());
 
 		statement.execute();
@@ -244,7 +276,7 @@ public class AnimalDAO implements GenericDAO<Animal> {
 
 			PreparedStatement statement = con.prepareStatement(sql);
 			statement.setDouble(1, animal.getPeso());
-			statement.setDate(2, (Date) animal.getDataUltimaMedicacao());
+			statement.setDate(2, animal.getDataUltimaMedicacao());
 
 			statement.execute();
 
@@ -262,7 +294,7 @@ public class AnimalDAO implements GenericDAO<Animal> {
 
 			PreparedStatement statement = con.prepareStatement(sql);
 			statement.setDouble(1, animal.getAltura());
-			statement.setDate(2, (Date) animal.getDataUltimaMedicacao());
+			statement.setDate(2, animal.getDataUltimaMedicacao());
 			statement.setLong(3, animal.getRegistro());
 			statement.execute();
 			statement.close();

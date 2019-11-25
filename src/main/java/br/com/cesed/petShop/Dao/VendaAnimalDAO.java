@@ -7,10 +7,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import br.com.cesed.petShop.Util.ConexaoUtil;
-import br.com.cesed.petShop.modelo.Animal;
 import br.com.cesed.petShop.modelo.VendaAnimal;
 
+@Repository
 public class VendaAnimalDAO implements GenericDAO<VendaAnimal>{
 	private Connection con;
 
@@ -53,7 +55,7 @@ public class VendaAnimalDAO implements GenericDAO<VendaAnimal>{
 			ResultSet resultados = preparador.executeQuery();
 			while (resultados.next()) {
 				VendaAnimal venda = new VendaAnimal();
-				venda.setNotaFiscal(resultados.getLong("nota_fiscal"));
+				venda.setNotaFiscal(resultados.getInt("nota_fiscal"));
 				venda.setMatFunc(resultados.getInt("matricula_funcionario"));
 				venda.setRegAnimal(resultados.getInt("registro_animal"));
 				venda.setAno(resultados.getInt("ano"));

@@ -8,9 +8,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import br.com.cesed.petShop.Util.ConexaoUtil;
 import br.com.cesed.petShop.modelo.Funcionario;
 
+@Repository
 public class FuncionarioDAO implements GenericDAO<Funcionario>{
 
 	private Connection con;
@@ -144,8 +147,9 @@ public class FuncionarioDAO implements GenericDAO<Funcionario>{
 	public Funcionario buscarPorNome(String nome) {
 		try {
 			con = ConexaoUtil.getInstance().getConnection();
-			String sql = "Select * from animal";
+			String sql = "Select * from funcionario = ?";
 			PreparedStatement preparador = con.prepareStatement(sql);
+			preparador.setString(1, nome);
 			ResultSet resultados = preparador.executeQuery();
 			Funcionario func = new Funcionario();
 			func.setCpf(resultados.getString("cpf"));
